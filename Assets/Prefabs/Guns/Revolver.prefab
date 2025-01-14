@@ -1604,6 +1604,8 @@ GameObject:
   - component: {fileID: 2403148746425655898}
   - component: {fileID: 2263986355777632625}
   - component: {fileID: 2042925220154932938}
+  - component: {fileID: 7281370197563637638}
+  - component: {fileID: 4501272991807448774}
   m_Layer: 0
   m_Name: Revolver
   m_TagString: Untagged
@@ -1684,3 +1686,34 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &7281370197563637638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7211043087999494597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86a9b187eeb4dcc47b9dde232fcaf343, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gaugeOutlet: {fileID: 4190240993772735002}
+  clip: {fileID: 4501272991807448774}
+  timeBetweenShoot: 1.5
+  projectileSpeed: 10
+--- !u!114 &4501272991807448774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7211043087999494597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9f01dbe2ee2fe944b5f9cf3ab9264ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabProjectile: {fileID: 5647092104006528080, guid: e3b25c6f18925fd44abaa14168eb6b66, type: 3}
+  projectilesAmount: 7
+  ammu: []

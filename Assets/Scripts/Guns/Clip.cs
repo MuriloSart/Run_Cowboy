@@ -9,6 +9,11 @@ public class Clip : MonoBehaviour
     public List<ProjectileBase> ammu;
     private int _currentBullet = 0;
 
+    private void Awake()
+    {
+        transform.LookAt(Camera.main.transform.position + Camera.main.transform.forward * 1000);
+    }
+
     private void Start()
     {
         for (int i = 0; i < projectilesAmount; i++)

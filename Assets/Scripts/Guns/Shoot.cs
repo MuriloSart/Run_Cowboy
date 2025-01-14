@@ -8,7 +8,10 @@ public class Shoot : MonoBehaviour
     public float timeBetweenShoot = .2f;
     public float projectileSpeed = 1f;
 
-    private bool canShoot = true;
+    private bool _canShoot = true;
+
+    private RaycastHit hit;
+    public RaycastHit BulletCollisor { get => hit; }
 
     public void Perform()
     {
@@ -17,12 +20,16 @@ public class Shoot : MonoBehaviour
 
     public virtual IEnumerator ShootCoroutine()
     {
-        if (!canShoot) yield break;
+        if (!_canShoot) yield break;
 
         clip.Fire(gaugeOutlet, projectileSpeed);
-        canShoot = false;
+        _canShoot = false;
+
+        var destiny = Camera.main.transform.position + Camera.main.transform.forward * 1000;
+            
+        var collided = Physics.Raycast(gaugeOutlet.position, destiny, out hit, 1000);
 
         yield return new WaitForSeconds(timeBetweenShoot);
-        canShoot = true;
+        _canShoot = true;
     }
 }

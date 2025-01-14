@@ -2,27 +2,28 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    public Transform target;
-    public float distance = 1f; // Distância da câmera ao personagem
-    public float sensitivityX = 100f;
-    public float sensitivityY = 100f;
-    public float minY = -20f; // Ângulo mínimo no eixo Y
-    public float maxY = 60f; // Ângulo máximo no eixo Y
+    public Transform playerBody;
+    public float mouseSensitivity = 100f;
 
-    private float rotationY = 0f;
-    private float rotationX = 0f;
+    private float xRotation = 0f;
 
-    void Update()
+    private void Start()
     {
-        float mouseX = Input.GetAxis("Mouse X") * sensitivityX * Time.deltaTime;
-        float mouseY = Input.GetAxis("Mouse Y") * sensitivityY * Time.deltaTime;
+        Cursor.lockState = CursorLockMode.Locked;
+    }
 
-        rotationX += mouseX;
-        rotationY -= mouseY;
-        rotationY = Mathf.Clamp(rotationY, 0, 0);
+    private void Update()
+    {
+        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
+        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
-        Quaternion rotation = Quaternion.Euler(rotationY, rotationX, 0);
+        
+        xRotation -= mouseY;
+        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
-        target.rotation = rotation;
+        transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+        transform.Rotate(Vector3.up * mouseX);
+
+        playerBody.Rotate(Vector3.up * mouseX);
     }
 }

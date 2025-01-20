@@ -1,40 +1,43 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Clip : MonoBehaviour
-{
-    public ProjectileBase prefabProjectile;
-    public int projectilesAmount;
-
-    public List<ProjectileBase> ammu;
-    private int _currentBullet = 0;
-
-    private void Awake()
+namespace Guns
+{ 
+    public class Clip : MonoBehaviour
     {
-        transform.LookAt(Camera.main.transform.position + Camera.main.transform.forward * 1000);
-    }
+        public ProjectileBase prefabProjectile;
+        public int projectilesAmount;
 
-    private void Start()
-    {
-        for (int i = 0; i < projectilesAmount; i++)
+        public List<ProjectileBase> ammu;
+        private int _currentBullet = 0;
+
+        private void Awake()
         {
-            var currentProjectile = Instantiate(prefabProjectile);
-            ammu.Add(currentProjectile);
+            transform.LookAt(Camera.main.transform.position + Camera.main.transform.forward * 1000);
         }
-    }
 
-    public void Fire(Transform positionToShoot, float speed)
-    {
-        if (ammu[_currentBullet].isActiveAndEnabled) return;
+        private void Start()
+        {
+            for (int i = 0; i < projectilesAmount; i++)
+            {
+                var currentProjectile = Instantiate(prefabProjectile);
+                ammu.Add(currentProjectile);
+            }
+        }
 
-        ammu[_currentBullet].Active();
-        ammu[_currentBullet].transform.SetPositionAndRotation(positionToShoot.position, positionToShoot.rotation);
-        ammu[_currentBullet].speed = speed;
-        _currentBullet++;
-    }
+        public void Fire(Transform positionToShoot, float speed)
+        {
+            if (ammu[_currentBullet].isActiveAndEnabled) return;
 
-    private void Update()
-    {
-        if (_currentBullet >= ammu.Count) _currentBullet = 0;
+            ammu[_currentBullet].Active();
+            ammu[_currentBullet].transform.SetPositionAndRotation(positionToShoot.position, positionToShoot.rotation);
+            ammu[_currentBullet].speed = speed;
+            _currentBullet++;
+        }
+
+        private void Update()
+        {
+            if (_currentBullet >= ammu.Count) _currentBullet = 0;
+        }
     }
 }

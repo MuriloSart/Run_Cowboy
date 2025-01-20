@@ -124,4 +124,5 @@ MonoBehaviour:
   speed: 1
   tagsToHit:
   - Enemy
+  - Player
   damageAmount: 1

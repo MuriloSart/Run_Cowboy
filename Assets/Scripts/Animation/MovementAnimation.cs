@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Scripts.Entities.Animation
 {
-    public class MovementAnimation : MonoBehaviour
+    public class MovementAnimation : MonoBehaviour, IMoveAnimation
     {
         private Animator animator;
 
@@ -11,7 +11,7 @@ namespace Scripts.Entities.Animation
             animator = GetComponent<Animator>();
         }
 
-        public void IsWalking(bool areRunning)
+        public void IsMoving(bool areRunning)
         {
             animator.SetBool("Walk", areRunning);
         }

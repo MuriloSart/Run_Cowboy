@@ -1,3 +1,4 @@
+using Entities.Interfaces;
 using UnityEngine;
 
 namespace Entities.Health
@@ -5,13 +6,12 @@ namespace Entities.Health
     public class Health : MonoBehaviour
     {
         public int maxHealth;
-        public DamageHandler damageHandler;
-        public HealHandle healHandler;
-        public KillHandler killHandler;
 
-        private int _currentHealth;
-        private Entity _entity;
+        public IKillable killHandler;
+        public IHealable healHandler;
+        private IDamageable damageHandler;
 
+        private int _currentHealth = 1;
         public int CurrentHealth
         { 
             get => _currentHealth;
@@ -26,25 +26,34 @@ namespace Entities.Health
             }
         }
 
-        private void Start()
+        private void OnValidate()
         {
-            if (_entity == null)
-                _entity = GetComponent<Entity>();
+            killHandler ??= new KillHandler();
+
+            healHandler ??= new HealHandle();
+
+            damageHandler ??= new DamageHandler();
+        }
+
+        private void Update()
+        {
+            if(_currentHealth == 0)
+                Kill();
         }
 
         public void Damage(int damage)
         {
-            damageHandler.TakeDamage(damage, _currentHealth);
+            _currentHealth = damageHandler.TakeDamage(damage, _currentHealth);
         }
 
         public void Heal(int heal)
         {
-            healHandler.Heal(heal, _currentHealth);
+            _currentHealth = healHandler.Heal(heal, _currentHealth);
         }
 
         public void Kill()
         {
-            killHandler.Kill(_entity);
+            killHandler.Kill(gameObject);
         }
     }
 }

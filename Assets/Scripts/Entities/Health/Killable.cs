@@ -1,10 +1,12 @@
-﻿namespace Entities.Health
+﻿using UnityEngine;
+
+namespace Entities.Health
 {
     public class KillHandler : IKillable
     {
-        public void Kill(Entity entity)
+        public void Kill(GameObject entity)
         {
-            entity.GameObject.SetActive(false);
+            entity.SetActive(false);
         }
     }
 }

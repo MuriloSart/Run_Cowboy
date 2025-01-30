@@ -8,22 +8,26 @@ namespace Guns
     public class ProjectileBase : MonoBehaviour
     {
         protected float timeToDestroy = 2f;
-        [HideInInspector] public float speed = 1f;
         public List<string> tagsToHit;
         public int damageAmount = 1;
+        [HideInInspector] public float speed = 1f;
+        [HideInInspector] public Vector3 bulletDirection = Vector3.forward;
 
         private void Awake()
         {
             gameObject.SetActive(false);
         }
 
-        public void Active()
+        public void Activate(Vector3 startPosition, Vector3 targetDirection)
         {
+            transform.position = startPosition;
+            bulletDirection = targetDirection.normalized;
+
             gameObject.SetActive(true);
-            StartCoroutine(timeToDesactive(timeToDestroy));
+            StartCoroutine(DeactivateAfterTime(timeToDestroy));
         }
 
-        private IEnumerator timeToDesactive(float time)
+        private IEnumerator DeactivateAfterTime(float time)
         {
             yield return new WaitForSeconds(time);
             gameObject.SetActive(false);
@@ -31,27 +35,26 @@ namespace Guns
 
         private void Update()
         {
-            transform.Translate(Vector3.forward * speed * Time.deltaTime);
+            transform.Translate(speed * Time.deltaTime * bulletDirection, Space.World);
         }
 
         private void OnCollisionEnter(Collision collision)
         {
-            foreach (var t in tagsToHit)
+            foreach (var tag in tagsToHit)
             {
-                if (collision.transform.tag == t)
+                if (collision.transform.CompareTag(tag))
                 {
                     var damageable = collision.transform.GetComponent<Health>();
                     if (damageable != null)
                     {
-                        Vector3 dir = collision.transform.position - transform.position;
-                        dir = -dir.normalized;
+                        Vector3 dir = (collision.transform.position - transform.position).normalized;
                         dir.y = 0;
-
                         damageable.Damage(damageAmount);
                     }
                     break;
                 }
             }
+
             gameObject.SetActive(false);
         }
     }

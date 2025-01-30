@@ -1714,6 +1714,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9f01dbe2ee2fe944b5f9cf3ab9264ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabProjectile: {fileID: 5647092104006528080, guid: e3b25c6f18925fd44abaa14168eb6b66, type: 3}
+  prefabProjectile: {fileID: 4688941921945336471, guid: e3b25c6f18925fd44abaa14168eb6b66, type: 3}
   projectilesAmount: 7
   ammu: []

@@ -39,11 +39,16 @@ namespace Guns
         {
             if (!_canShoot) yield break;
 
+            int layerMask = ~LayerMask.GetMask("NavMesh");
+
+            Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+
+
             ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));
 
-            bulletDirection = Physics.Raycast(ray, out hit, 1000) 
+            bulletDirection = Physics.Raycast(ray, out hit, 1000, layerMask) 
                 ? (hit.point - gaugeOutlet.position).normalized 
-                : bulletDirection = ray.direction;
+                : ray.direction;
 
             _canShoot = false;
 

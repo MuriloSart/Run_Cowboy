@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -6,19 +7,24 @@ public class EnemyPath : MonoBehaviour
 {
     public List<Transform> wayPoints;
 
-    public NavMeshAgent agent;
+    public List<NavMeshAgent> agents;
 
     private int wayPointIndex = 0;
 
+    private int radomInt;
+
     private void Update()
     {
-        if(agent.remainingDistance < .2f)
+        foreach (NavMeshAgent agent in agents)
         {
-            if (wayPointIndex < wayPoints.Count - 1)
-                wayPointIndex++;
-            else
-                wayPointIndex++;
-            agent.SetDestination(wayPoints[wayPointIndex].position );
+            if (agent != null && agent.isActiveAndEnabled)
+            {
+                if (agent.remainingDistance < .2f)
+                {
+                    radomInt = UnityEngine.Random.Range(0, wayPoints.Count - 1);
+                    agent.SetDestination(wayPoints[radomInt].position);
+                }
+            }
         }
     }
 }
